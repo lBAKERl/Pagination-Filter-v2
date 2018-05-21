@@ -76,7 +76,9 @@ function makePaginate() {
 function createListener() {
   let listener = fetchNode('.pagination');
   listener.addEventListener('click', event => {
+    if(event.target.innerHTML > 0) {
     updateTitle(updatePage(event.target));
+    }
   });
 }
 
