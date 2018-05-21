@@ -1,7 +1,7 @@
 // v2
 // provide pagination for the web page by breaking the students into 10
 // student pages and generating a page navigator at the bottom of the page
-//'use strict';
+'use strict';
 // GLOBAL BINDINGS
 const studentDiv = fetchNodes('.student-item'); // holds all student divs
 let displayNum = 10;  // changes number of students shown per page
