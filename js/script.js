@@ -1,18 +1,18 @@
 // v2
 // provide pagination for the web page by breaking the students into 10
 // student pages and generating a page navigator at the bottom of the page
-'use strict';
+//'use strict';
 // GLOBAL BINDINGS
 const studentDiv = fetchNodes('.student-item'); // holds all student divs
 let displayNum = 10;  // changes number of students shown per page
 const grouped = groupSubArray(studentDiv, displayNum); // group divs
 
 // calls initial reqd functions for pagination
-const initialize = (() => {
+window.onload = () => {
 makePaginate();
 createListener();
 fetchNode('ul a:first-child').click();
-})();
+}
 
 // wraps querySelector/All in fetchNode(..) and fetchNodes(..)
 function fetchNode (selector) {
@@ -76,15 +76,15 @@ function makePaginate() {
 function createListener() {
   let listener = fetchNode('.pagination');
   listener.addEventListener('click', event => {
-    updatePage(updateTitle(event.target.innerHTML));
+    updateTitle(updatePage(event.target));
   });
 }
 
 // changes title to show selected group of students
 function updateTitle(i) {
   const node = fetchNode('h2');
-  const start = ((i * displayNum) - displayNum) + 1;
-  const end = i * displayNum;
+  const start = ((i.innerHTML * displayNum) - displayNum) + 1;
+  const end = i.innerHTML * displayNum;
   node.textContent = end < studentDiv.length ?
     `Students ${start} - ${end} of ${studentDiv.length}`:
     `Students ${start} - ${studentDiv.length} of ${studentDiv.length}`;
@@ -93,9 +93,11 @@ function updateTitle(i) {
 
 // shows user selected page student group, changes active element
 function updatePage (i) {
-  fetchNode('.active').classList.remove('active');
-  event.target.className = 'active';
+  fetchNode('.active') ?
+    fetchNode('.active').classList.remove('active'):
+    null;
+  i.className = 'active';
   forEach(nodeHide, studentDiv);
-  forEach(nodeShow, grouped[i - 1]);
+  forEach(nodeShow, grouped[i.innerHTML - 1]);
   return i;
 }
